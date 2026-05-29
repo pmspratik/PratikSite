@@ -1,0 +1,492 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --fn-red: #D44038;
+  --fn-red-light: #FBE9E8;
+  --fn-red-mid: #E8736B;
+  --fn-green: #1D9E75;
+  --fn-green-bg: #E1F5EE;
+}
+
+.fp-wrap {
+  font-family: 'DM Sans', sans-serif;
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+}
+
+.fp-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fp-logo-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--fn-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fp-logo-dot svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+.fp-brand {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.2px;
+}
+
+.fp-badge {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--fn-red);
+  background: var(--fn-red-light);
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.2px;
+}
+
+.fp-merchant-card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.fp-merchant-top {
+  padding: 1rem 1.25rem 0.875rem;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.fp-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--fn-red-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fn-red);
+}
+
+.fp-merchant-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.fp-merchant-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+}
+
+.fp-merchant-sub {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fp-verified {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--fn-green);
+  background: var(--fn-green-bg);
+  padding: 3px 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.fp-merchant-meta {
+  padding: 0.625rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fp-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: var(--color-text-secondary);
+}
+
+.fp-meta-item i {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+}
+
+.fp-amount-card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.125rem 1.25rem;
+}
+
+.fp-input-label {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 0.625rem;
+}
+
+.fp-input-row {
+  display: flex;
+  align-items: stretch;
+  border: 1.5px solid var(--color-border-secondary);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.fp-input-row:focus-within {
+  border-color: var(--fn-red);
+}
+
+.fp-currency {
+  background: var(--color-background-secondary);
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border-right: 1px solid var(--color-border-secondary);
+  letter-spacing: 0.5px;
+}
+
+#fp-amount {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 14px;
+  height: 52px;
+  font-size: 22px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: 'DM Mono', monospace;
+  -moz-appearance: textfield;
+  min-width: 0;
+}
+
+#fp-amount::-webkit-outer-spin-button,
+#fp-amount::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+#fp-amount::placeholder { color: var(--color-text-tertiary); font-family: 'DM Sans', sans-serif; font-size: 16px; }
+
+.fp-qr-card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fp-qr-frame {
+  width: 220px;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 0.5px solid var(--color-border-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+#fp-qr-container {
+  width: 220px;
+  height: 220px;
+}
+
+#fp-qr-container canvas,
+#fp-qr-container img {
+  border-radius: 0;
+  display: block;
+}
+
+.fp-amount-display {
+  text-align: center;
+}
+
+.fp-amount-big {
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: -0.5px;
+}
+
+.fp-amount-big span {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-right: 3px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.fp-amount-note {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-top: 3px;
+}
+
+.fp-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--fn-green);
+  font-weight: 500;
+}
+
+.fp-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--fn-green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.fp-footer {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--color-text-tertiary);
+  padding-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.fp-footer strong {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.fp-divider {
+  width: 24px;
+  height: 2px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+.fp-bank-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--color-text-tertiary);
+}
+
+.fp-bank-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-border-secondary);
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<div class="fp-wrap">
+
+  <div class="fp-header">
+    <div class="fp-logo-row">
+      <div class="fp-logo-dot">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="8" height="8" rx="1.5"/>
+          <rect x="13" y="3" width="8" height="8" rx="1.5"/>
+          <rect x="3" y="13" width="8" height="8" rx="1.5"/>
+          <rect x="15" y="15" width="4" height="4" rx="1"/>
+        </svg>
+      </div>
+      <span class="fp-brand">fonepay</span>
+    </div>
+    <span class="fp-badge">Pay Now</span>
+  </div>
+
+  <div class="fp-merchant-card">
+    <div class="fp-merchant-top">
+      <div class="fp-avatar">SH</div>
+      <div class="fp-merchant-info">
+        <div class="fp-merchant-name">Sunrise Homes Welfare Society</div>
+        <div class="fp-merchant-sub">Satdobato Branch · Sanima Bank</div>
+      </div>
+      <div class="fp-verified">
+        <i class="ti ti-circle-check" aria-hidden="true" style="font-size:13px;"></i>
+        Verified
+      </div>
+    </div>
+    <div class="fp-merchant-meta">
+      <div class="fp-meta-item">
+        <i class="ti ti-credit-card" aria-hidden="true"></i>
+        <span>2222110001760441</span>
+      </div>
+      <div class="fp-meta-item">
+        <i class="ti ti-map-pin" aria-hidden="true"></i>
+        <span>Satdobato</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fp-amount-card">
+    <div class="fp-input-label">Payment amount</div>
+    <div class="fp-input-row">
+      <div class="fp-currency">NPR</div>
+      <input id="fp-amount" type="number" min="1" step="1" placeholder="0.00" inputmode="decimal" autocomplete="off" />
+    </div>
+  </div>
+
+  <div class="fp-qr-card">
+    <div class="fp-qr-frame">
+      <div id="fp-qr-container"></div>
+    </div>
+
+    <div class="fp-divider"></div>
+
+    <div class="fp-amount-display">
+      <div class="fp-amount-big" id="fp-display"><span>Rs</span>—</div>
+      <div class="fp-amount-note" id="fp-note">enter an amount to set payment</div>
+    </div>
+
+    <div class="fp-status">
+      <div class="fp-status-dot"></div>
+      <span id="fp-status-text">ready to scan</span>
+    </div>
+  </div>
+
+  <div class="fp-footer">
+    <div class="fp-bank-row">
+      <i class="ti ti-scan" aria-hidden="true" style="font-size:13px;"></i>
+      scan with any fonepay-enabled app
+      <span class="fp-bank-dot"></span>
+      wallet
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+
+function crc16(s){
+  let c=0xFFFF;
+  for(let i=0;i<s.length;i++){
+    c^=s.charCodeAt(i)<<8;
+    for(let j=0;j<8;j++){c=(c&0x8000)?((c<<1)^0x1021):(c<<1);c&=0xFFFF;}
+  }
+  return c.toString(16).toUpperCase().padStart(4,'0');
+}
+
+function f(tag,val){return tag+String(val.length).padStart(2,'0')+val;}
+
+function buildQR(amount){
+  const ma=f('00','fonepay.com')+f('07','2222110001760441');
+  let p='';
+  p+=f('00','01');
+  p+=f('01','12');
+  p+=f('26',ma);
+  p+=f('52','8398');
+  p+=f('53','524');
+  if(amount&&amount>0) p+=f('54',parseFloat(amount).toFixed(2));
+  p+=f('58','NP');
+  p+=f('59','SUNRISE HOMES WELFARE SOCIETY');
+  p+=f('60','Satdobato Bra');
+  const ad=f('07','176047')+f('63','4601');
+  p+=f('62',ad);
+  const wc=p+'6304';
+  return wc+crc16(wc);
+}
+
+let qrInst=null;
+
+function renderQR(text){
+  const c=document.getElementById('fp-qr-container');
+  c.innerHTML='';
+  qrInst=new QRCode(c,{
+    text,width:220,height:220,
+    colorDark:'#1a1a1a',colorLight:'#ffffff',
+    correctLevel:QRCode.CorrectLevel.M
+  });
+}
+
+function fmt(n){
+  return n.toLocaleString('en-NP',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function update(){
+  const raw=document.getElementById('fp-amount').value.trim();
+  const amt=parseFloat(raw);
+  const disp=document.getElementById('fp-display');
+  const note=document.getElementById('fp-note');
+  const st=document.getElementById('fp-status-text');
+
+  const qrStr=buildQR((!isNaN(amt)&&amt>0)?amt:0);
+
+  if(!isNaN(amt)&&amt>0){
+    disp.innerHTML='<span>Rs\u00a0</span>'+fmt(amt);
+    note.textContent='payment amount';
+    st.textContent='scan to pay Rs\u00a0'+fmt(amt);
+  } else {
+    disp.innerHTML='<span>Rs</span>—';
+    note.textContent='enter an amount above to set payment';
+    st.textContent='open amount · ready to scan';
+  }
+
+  renderQR(qrStr);
+}
+
+document.getElementById('fp-amount').addEventListener('input',update);
+update();
+
+})();
+</script>
