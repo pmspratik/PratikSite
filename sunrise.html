@@ -1,492 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#C0392B">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fonepay">
+<meta name="description" content="Fonepay QR payment — Sunrise Homes Welfare Society">
+<title>Fonepay · Sunrise Homes</title>
+
+<!-- Inline PWA manifest via data URI -->
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Fonepay%20%E2%80%93%20Sunrise%20Homes%22,%22short_name%22:%22Fonepay%22,%22description%22:%22Fonepay%20QR%20payment%20for%20Sunrise%20Homes%20Welfare%20Society%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23ffffff%22,%22theme_color%22:%22%23C0392B%22,%22orientation%22:%22portrait%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20512%20512'%3E%3Crect%20width%3D'512'%20height%3D'512'%20rx%3D'80'%20fill%3D'%23C0392B'%2F%3E%3Crect%20x%3D'80'%20y%3D'80'%20width%3D'140'%20height%3D'140'%20rx%3D'20'%20fill%3D'white'%2F%3E%3Crect%20x%3D'292'%20y%3D'80'%20width%3D'140'%20height%3D'140'%20rx%3D'20'%20fill%3D'white'%2F%3E%3Crect%20x%3D'80'%20y%3D'292'%20width%3D'140'%20height%3D'140'%20rx%3D'20'%20fill%3D'white'%2F%3E%3Crect%20x%3D'292'%20y%3D'292'%20width%3D'60'%20height%3D'60'%20rx%3D'10'%20fill%3D'white'%2F%3E%3Crect%20x%3D'372'%20y%3D'292'%20width%3D'60'%20height%3D'60'%20rx%3D'10'%20fill%3D'white'%2F%3E%3Crect%20x%3D'292'%20y%3D'372'%20width%3D'60'%20height%3D'60'%20rx%3D'10'%20fill%3D'white'%2F%3E%3C%2Fsvg%3E%22,%22sizes%22:%22any%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22any%20maskable%22}]}">
+
+<!-- Apple touch icon inline SVG encoded -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='80' fill='%23C0392B'/><rect x='80' y='80' width='140' height='140' rx='20' fill='white'/><rect x='292' y='80' width='140' height='140' rx='20' fill='white'/><rect x='80' y='292' width='140' height='140' rx='20' fill='white'/><rect x='292' y='292' width='60' height='60' rx='10' fill='white'/><rect x='372' y='292' width='60' height='60' rx='10' fill='white'/><rect x='292' y='372' width='60' height='60' rx='10' fill='white'/></svg>">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23C0392B'/><rect x='5' y='5' width='9' height='9' rx='1.5' fill='white'/><rect x='18' y='5' width='9' height='9' rx='1.5' fill='white'/><rect x='5' y='18' width='9' height='9' rx='1.5' fill='white'/><rect x='18' y='18' width='4' height='4' rx='1' fill='white'/><rect x='23' y='18' width='4' height='4' rx='1' fill='white'/><rect x='18' y='23' width='4' height='4' rx='1' fill='white'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #C0392B;
+    --red-dark: #96281B;
+    --red-light: #FDECEA;
+    --red-mid: #E74C3C;
+    --green: #1D9E75;
+    --green-bg: #E8F8F2;
+    --text-primary: #1A1A1A;
+    --text-secondary: #6B7280;
+    --text-tertiary: #9CA3AF;
+    --bg: #F5F4F0;
+    --surface: #FFFFFF;
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.14);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
 
-:root {
-  --fn-red: #D44038;
-  --fn-red-light: #FBE9E8;
-  --fn-red-mid: #E8736B;
-  --fn-green: #1D9E75;
-  --fn-green-bg: #E1F5EE;
-}
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text-primary: #F0EFEC;
+      --text-secondary: #9CA3AF;
+      --text-tertiary: #6B7280;
+      --bg: #111110;
+      --surface: #1C1C1A;
+      --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.14);
+      --red-light: #2C1A19;
+      --green-bg: #0E2820;
+    }
+  }
 
-.fp-wrap {
-  font-family: 'DM Sans', sans-serif;
-  max-width: 390px;
-  margin: 0 auto;
-  padding: 1.25rem 1rem 2rem;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
 
-.fp-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.25rem 0;
-}
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
 
-.fp-logo-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  /* ── Layout ── */
+  .app {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: calc(var(--safe-top) + 16px) 16px calc(var(--safe-bottom) + 24px);
+    gap: 12px;
+  }
 
-.fp-logo-dot {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: var(--fn-red);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0 8px;
+  }
 
-.fp-logo-dot svg {
-  width: 18px;
-  height: 18px;
-  fill: white;
-}
+  .logo-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-.fp-brand {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  letter-spacing: -0.2px;
-}
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--red);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.fp-badge {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--fn-red);
-  background: var(--fn-red-light);
-  padding: 4px 10px;
-  border-radius: 999px;
-  letter-spacing: 0.2px;
-}
+  .logo-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+  }
 
-.fp-merchant-card {
-  background: var(--color-background-primary);
-  border: 0.5px solid var(--color-border-tertiary);
-  border-radius: var(--border-radius-lg);
-  overflow: hidden;
-}
+  .logo-text {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
 
-.fp-merchant-top {
-  padding: 1rem 1.25rem 0.875rem;
-  border-bottom: 0.5px solid var(--color-border-tertiary);
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
+  .header-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--red);
+    background: var(--red-light);
+    padding: 5px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.3px;
+  }
 
-.fp-avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  background: var(--fn-red-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--fn-red);
-}
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 0.5px solid var(--border);
+    overflow: hidden;
+  }
 
-.fp-merchant-info {
-  flex: 1;
-  min-width: 0;
-}
+  /* ── Merchant card ── */
+  .merchant-top {
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border-bottom: 0.5px solid var(--border);
+  }
 
-.fp-merchant-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  line-height: 1.3;
-  letter-spacing: -0.2px;
-}
+  .merchant-avatar {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    border-radius: 12px;
+    background: var(--red-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.5px;
+  }
 
-.fp-merchant-sub {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  margin-top: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  .merchant-info { flex: 1; min-width: 0; }
 
-.fp-verified {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  color: var(--fn-green);
-  background: var(--fn-green-bg);
-  padding: 3px 8px;
-  border-radius: 999px;
-  flex-shrink: 0;
-  font-weight: 500;
-}
+  .merchant-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+  }
 
-.fp-merchant-meta {
-  padding: 0.625rem 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+  .merchant-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-.fp-meta-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11.5px;
-  color: var(--color-text-secondary);
-}
+  .verified-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--green-bg);
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
 
-.fp-meta-item i {
-  font-size: 13px;
-  color: var(--color-text-tertiary);
-}
+  .verified-badge svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--green);
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 
-.fp-amount-card {
-  background: var(--color-background-primary);
-  border: 0.5px solid var(--color-border-tertiary);
-  border-radius: var(--border-radius-lg);
-  padding: 1.125rem 1.25rem;
-}
+  .merchant-meta {
+    padding: 10px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
 
-.fp-input-label {
-  font-size: 11.5px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  margin-bottom: 0.625rem;
-}
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11.5px;
+    color: var(--text-secondary);
+  }
 
-.fp-input-row {
-  display: flex;
-  align-items: stretch;
-  border: 1.5px solid var(--color-border-secondary);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: border-color 0.15s;
-}
+  .meta-item svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--text-tertiary);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
 
-.fp-input-row:focus-within {
-  border-color: var(--fn-red);
-}
+  /* ── Amount input ── */
+  .amount-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 0.5px solid var(--border);
+    padding: 16px;
+  }
 
-.fp-currency {
-  background: var(--color-background-secondary);
-  padding: 0 14px;
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  border-right: 1px solid var(--color-border-secondary);
-  letter-spacing: 0.5px;
-}
+  .input-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+  }
 
-#fp-amount {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 0 14px;
-  height: 52px;
-  font-size: 22px;
-  font-weight: 500;
-  background: transparent;
-  color: var(--color-text-primary);
-  font-family: 'DM Mono', monospace;
-  -moz-appearance: textfield;
-  min-width: 0;
-}
+  .input-wrap {
+    display: flex;
+    align-items: stretch;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
 
-#fp-amount::-webkit-outer-spin-button,
-#fp-amount::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .input-wrap:focus-within {
+    border-color: var(--red);
+  }
 
-#fp-amount::placeholder { color: var(--color-text-tertiary); font-family: 'DM Sans', sans-serif; font-size: 16px; }
+  .currency-pill {
+    background: var(--bg);
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    border-right: 1.5px solid var(--border-strong);
+    letter-spacing: 0.8px;
+    flex-shrink: 0;
+  }
 
-.fp-qr-card {
-  background: var(--color-background-primary);
-  border: 0.5px solid var(--color-border-tertiary);
-  border-radius: var(--border-radius-lg);
-  padding: 1.5rem 1.25rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
+  #amount-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 14px;
+    height: 56px;
+    font-size: 24px;
+    font-weight: 500;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: 'DM Mono', monospace;
+    -moz-appearance: textfield;
+    min-width: 0;
+    width: 100%;
+  }
 
-.fp-qr-frame {
-  width: 220px;
-  height: 220px;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 0.5px solid var(--color-border-tertiary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
+  #amount-input::-webkit-outer-spin-button,
+  #amount-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  #amount-input::placeholder {
+    color: var(--text-tertiary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+  }
 
-#fp-qr-container {
-  width: 220px;
-  height: 220px;
-}
+  /* ── Quick amounts ── */
+  .quick-amounts {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
 
-#fp-qr-container canvas,
-#fp-qr-container img {
-  border-radius: 0;
-  display: block;
-}
+  .quick-btn {
+    flex: 1;
+    min-width: 60px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
 
-.fp-amount-display {
-  text-align: center;
-}
+  .quick-btn:active {
+    background: var(--red-light);
+    color: var(--red);
+    border-color: var(--red);
+    transform: scale(0.97);
+  }
 
-.fp-amount-big {
-  font-size: 26px;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  font-family: 'DM Mono', monospace;
-  letter-spacing: -0.5px;
-}
+  /* ── QR card ── */
+  .qr-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 0.5px solid var(--border);
+    padding: 20px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
 
-.fp-amount-big span {
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--color-text-secondary);
-  margin-right: 3px;
-  font-family: 'DM Sans', sans-serif;
-}
+  .qr-frame {
+    position: relative;
+    width: 100%;
+    max-width: 260px;
+    aspect-ratio: 1;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+  }
 
-.fp-amount-note {
-  font-size: 12px;
-  color: var(--color-text-tertiary);
-  margin-top: 3px;
-}
+  .qr-frame::before,
+  .qr-frame::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: var(--red);
+    border-style: solid;
+    z-index: 2;
+  }
 
-.fp-status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 12.5px;
-  color: var(--fn-green);
-  font-weight: 500;
-}
+  .qr-frame::before { top: 8px; left: 8px; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+  .qr-frame::after  { bottom: 8px; right: 8px; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
 
-.fp-status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--fn-green);
-  animation: pulse 2s infinite;
-}
+  .qr-corners {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
+  .qr-corners span {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: var(--red);
+    border-style: solid;
+  }
 
-.fp-footer {
-  text-align: center;
-  font-size: 11.5px;
-  color: var(--color-text-tertiary);
-  padding-bottom: 0.5rem;
-  line-height: 1.6;
-}
+  .qr-corners span:nth-child(1) { top: 8px; right: 8px; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+  .qr-corners span:nth-child(2) { bottom: 8px; left: 8px; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
 
-.fp-footer strong {
-  font-weight: 500;
-  color: var(--color-text-secondary);
-}
+  #qr-container {
+    width: 100%;
+    height: 100%;
+  }
 
-.fp-divider {
-  width: 24px;
-  height: 2px;
-  background: var(--color-border-tertiary);
-  border-radius: 2px;
-  margin: 0 auto;
-}
+  #qr-container canvas,
+  #qr-container img {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
 
-.fp-bank-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 11.5px;
-  color: var(--color-text-tertiary);
-}
+  .qr-amount-row {
+    text-align: center;
+    width: 100%;
+  }
 
-.fp-bank-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--color-border-secondary);
-}
+  .qr-amount-big {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+
+  .qr-amount-big .rs {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    font-family: 'DM Sans', sans-serif;
+    margin-right: 2px;
+  }
+
+  .qr-amount-note {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  /* ── Status ── */
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 4px 0 2px;
+  }
+
+  .footer-text {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+  }
+
+  .footer-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .bank-chip {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    background: var(--surface);
+    border: 0.5px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 4px 11px;
+    letter-spacing: 0.2px;
+  }
+
+  /* ── Install banner ── */
+  #install-banner {
+    display: none;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    animation: slideUp 0.3s ease;
+  }
+
+  #install-banner.visible { display: flex; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .install-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--red-light);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .install-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--red);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .install-text { flex: 1; min-width: 0; }
+
+  .install-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .install-sub {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  .install-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .install-btn:active { background: var(--red-dark); }
+
+  .install-close {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    display: flex;
+  }
+
+  .install-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  /* ── Splash / iOS hint ── */
+  .ios-hint {
+    display: none;
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    text-align: center;
+    padding: 2px 0;
+    line-height: 1.6;
+  }
+
+  .ios-hint.visible { display: block; }
 </style>
+</head>
+<body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<div class="app">
 
-<div class="fp-wrap">
+  <!-- Install banner (Android/Chrome) -->
+  <div id="install-banner">
+    <div class="install-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M3 17v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/></svg>
+    </div>
+    <div class="install-text">
+      <div class="install-title">Add to Home Screen</div>
+      <div class="install-sub">Open instantly, works offline</div>
+    </div>
+    <button class="install-btn" id="install-btn">Install</button>
+    <button class="install-close" id="install-close" aria-label="Dismiss">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
 
-  <div class="fp-header">
-    <div class="fp-logo-row">
-      <div class="fp-logo-dot">
+  <!-- iOS Safari hint -->
+  <div class="ios-hint" id="ios-hint">
+    Tap <strong>Share</strong> then <strong>"Add to Home Screen"</strong> to install this app
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-row">
+      <div class="logo-icon">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <rect x="3" y="3" width="8" height="8" rx="1.5"/>
           <rect x="13" y="3" width="8" height="8" rx="1.5"/>
           <rect x="3" y="13" width="8" height="8" rx="1.5"/>
           <rect x="15" y="15" width="4" height="4" rx="1"/>
+          <rect x="15" y="20" width="4" height="4" rx="1" transform="translate(0,-4.5)"/>
+          <rect x="20" y="15" width="4" height="4" rx="1" transform="translate(-4.5,0)"/>
         </svg>
       </div>
-      <span class="fp-brand">fonepay</span>
+      <span class="logo-text">fonepay</span>
     </div>
-    <span class="fp-badge">Pay Now</span>
+    <span class="header-badge">Pay Now</span>
   </div>
 
-  <div class="fp-merchant-card">
-    <div class="fp-merchant-top">
-      <div class="fp-avatar">SH</div>
-      <div class="fp-merchant-info">
-        <div class="fp-merchant-name">Sunrise Homes Welfare Society</div>
-        <div class="fp-merchant-sub">Satdobato Branch · Sanima Bank</div>
+  <!-- Merchant info -->
+  <div class="card">
+    <div class="merchant-top">
+      <div class="merchant-avatar">SH</div>
+      <div class="merchant-info">
+        <div class="merchant-name">Sunrise Homes Welfare Society</div>
+        <div class="merchant-sub">Satdobato Branch · Sanima Bank</div>
       </div>
-      <div class="fp-verified">
-        <i class="ti ti-circle-check" aria-hidden="true" style="font-size:13px;"></i>
+      <div class="verified-badge">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         Verified
       </div>
     </div>
-    <div class="fp-merchant-meta">
-      <div class="fp-meta-item">
-        <i class="ti ti-credit-card" aria-hidden="true"></i>
-        <span>2222110001760441</span>
+    <div class="merchant-meta">
+      <div class="meta-item">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span>Terminal: 2222110001760441</span>
       </div>
-      <div class="fp-meta-item">
-        <i class="ti ti-map-pin" aria-hidden="true"></i>
-        <span>Satdobato</span>
+      <div class="meta-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Satdobato, Lalitpur</span>
       </div>
     </div>
   </div>
 
-  <div class="fp-amount-card">
-    <div class="fp-input-label">Payment amount</div>
-    <div class="fp-input-row">
-      <div class="fp-currency">NPR</div>
-      <input id="fp-amount" type="number" min="1" step="1" placeholder="0.00" inputmode="decimal" autocomplete="off" />
+  <!-- Amount input -->
+  <div class="amount-card card">
+    <div class="input-label">Payment Amount</div>
+    <div class="input-wrap">
+      <div class="currency-pill">NPR</div>
+      <input id="amount-input" type="number" min="1" step="1" placeholder="0.00" inputmode="decimal" autocomplete="off" />
+    </div>
+    <div class="quick-amounts">
+      <button class="quick-btn" data-val="100">100</button>
+      <button class="quick-btn" data-val="500">500</button>
+      <button class="quick-btn" data-val="1000">1,000</button>
+      <button class="quick-btn" data-val="2000">2,000</button>
+      <button class="quick-btn" data-val="5000">5,000</button>
     </div>
   </div>
 
-  <div class="fp-qr-card">
-    <div class="fp-qr-frame">
-      <div id="fp-qr-container"></div>
+  <!-- QR code -->
+  <div class="qr-card">
+    <div class="qr-frame">
+      <div class="qr-corners">
+        <span></span>
+        <span></span>
+      </div>
+      <div id="qr-container"></div>
     </div>
 
-    <div class="fp-divider"></div>
-
-    <div class="fp-amount-display">
-      <div class="fp-amount-big" id="fp-display"><span>Rs</span>—</div>
-      <div class="fp-amount-note" id="fp-note">enter an amount to set payment</div>
+    <div class="qr-amount-row">
+      <div class="qr-amount-big" id="amount-display">
+        <span class="rs">Rs</span>—
+      </div>
+      <div class="qr-amount-note" id="amount-note">enter an amount above to set payment</div>
     </div>
 
-    <div class="fp-status">
-      <div class="fp-status-dot"></div>
-      <span id="fp-status-text">ready to scan</span>
+    <div class="status-row">
+      <div class="status-dot"></div>
+      <span id="status-text">ready to scan</span>
     </div>
   </div>
 
-  <div class="fp-footer">
-    <div class="fp-bank-row">
-      <i class="ti ti-scan" aria-hidden="true" style="font-size:13px;"></i>
-      scan with any fonepay-enabled app
-      <span class="fp-bank-dot"></span>
-      wallet
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-text">scan with any fonepay-enabled banking app or wallet</div>
+    <div class="footer-logos">
+      <span class="bank-chip">Sanima Bank</span>
+      <span class="bank-chip">fonepay</span>
+      <span class="bank-chip">QR Pay</span>
     </div>
   </div>
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <script>
-(function(){
-
-function crc16(s){
-  let c=0xFFFF;
-  for(let i=0;i<s.length;i++){
-    c^=s.charCodeAt(i)<<8;
-    for(let j=0;j<8;j++){c=(c&0x8000)?((c<<1)^0x1021):(c<<1);c&=0xFFFF;}
+// ── QR logic ──────────────────────────────────────
+function crc16(s) {
+  let c = 0xFFFF;
+  for (let i = 0; i < s.length; i++) {
+    c ^= s.charCodeAt(i) << 8;
+    for (let j = 0; j < 8; j++) { c = (c & 0x8000) ? ((c << 1) ^ 0x1021) : (c << 1); c &= 0xFFFF; }
   }
-  return c.toString(16).toUpperCase().padStart(4,'0');
+  return c.toString(16).toUpperCase().padStart(4, '0');
 }
 
-function f(tag,val){return tag+String(val.length).padStart(2,'0')+val;}
+function f(tag, val) { return tag + String(val.length).padStart(2, '0') + val; }
 
-function buildQR(amount){
-  const ma=f('00','fonepay.com')+f('07','2222110001760441');
-  let p='';
-  p+=f('00','01');
-  p+=f('01','12');
-  p+=f('26',ma);
-  p+=f('52','8398');
-  p+=f('53','524');
-  if(amount&&amount>0) p+=f('54',parseFloat(amount).toFixed(2));
-  p+=f('58','NP');
-  p+=f('59','SUNRISE HOMES WELFARE SOCIETY');
-  p+=f('60','Satdobato Bra');
-  const ad=f('07','176047')+f('63','4601');
-  p+=f('62',ad);
-  const wc=p+'6304';
-  return wc+crc16(wc);
+function buildQR(amount) {
+  const ma = f('00', 'fonepay.com') + f('07', '2222110001760441');
+  let p = f('00','01') + f('01','12') + f('26', ma) + f('52','8398') + f('53','524');
+  if (amount && amount > 0) p += f('54', parseFloat(amount).toFixed(2));
+  p += f('58','NP') + f('59','SUNRISE HOMES WELFARE SOCIETY') + f('60','Satdobato Bra');
+  p += f('62', f('07','176047') + f('63','4601'));
+  const wc = p + '6304';
+  return wc + crc16(wc);
 }
 
-let qrInst=null;
+function fmt(n) { return n.toLocaleString('en-NP', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
-function renderQR(text){
-  const c=document.getElementById('fp-qr-container');
-  c.innerHTML='';
-  qrInst=new QRCode(c,{
-    text,width:220,height:220,
-    colorDark:'#1a1a1a',colorLight:'#ffffff',
-    correctLevel:QRCode.CorrectLevel.M
+let qrInst = null;
+
+function renderQR(text) {
+  const el = document.getElementById('qr-container');
+  el.innerHTML = '';
+  qrInst = new QRCode(el, {
+    text, width: 280, height: 280,
+    colorDark: '#1A1A1A', colorLight: '#FFFFFF',
+    correctLevel: QRCode.CorrectLevel.M
   });
 }
 
-function fmt(n){
-  return n.toLocaleString('en-NP',{minimumFractionDigits:2,maximumFractionDigits:2});
+function update() {
+  const raw = document.getElementById('amount-input').value.trim();
+  const amt = parseFloat(raw);
+  const valid = !isNaN(amt) && amt > 0;
+
+  document.getElementById('amount-display').innerHTML =
+    valid ? '<span class="rs">Rs\u00a0</span>' + fmt(amt) : '<span class="rs">Rs</span>—';
+  document.getElementById('amount-note').textContent =
+    valid ? 'payment amount' : 'enter an amount above to set payment';
+  document.getElementById('status-text').textContent =
+    valid ? 'scan to pay Rs\u00a0' + fmt(amt) : 'open amount · ready to scan';
+
+  renderQR(buildQR(valid ? amt : 0));
 }
 
-function update(){
-  const raw=document.getElementById('fp-amount').value.trim();
-  const amt=parseFloat(raw);
-  const disp=document.getElementById('fp-display');
-  const note=document.getElementById('fp-note');
-  const st=document.getElementById('fp-status-text');
+document.getElementById('amount-input').addEventListener('input', update);
 
-  const qrStr=buildQR((!isNaN(amt)&&amt>0)?amt:0);
+document.querySelectorAll('.quick-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('amount-input').value = btn.dataset.val;
+    update();
+  });
+});
 
-  if(!isNaN(amt)&&amt>0){
-    disp.innerHTML='<span>Rs\u00a0</span>'+fmt(amt);
-    note.textContent='payment amount';
-    st.textContent='scan to pay Rs\u00a0'+fmt(amt);
-  } else {
-    disp.innerHTML='<span>Rs</span>—';
-    note.textContent='enter an amount above to set payment';
-    st.textContent='open amount · ready to scan';
-  }
-
-  renderQR(qrStr);
-}
-
-document.getElementById('fp-amount').addEventListener('input',update);
 update();
 
-})();
+// ── PWA install ───────────────────────────────────
+let deferredPrompt = null;
+const banner = document.getElementById('install-banner');
+const installBtn = document.getElementById('install-btn');
+const closeBtn = document.getElementById('install-close');
+const iosHint = document.getElementById('ios-hint');
+
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+if (isIOS && !isStandalone) {
+  iosHint.classList.add('visible');
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!isStandalone) banner.classList.add('visible');
+});
+
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  banner.classList.remove('visible');
+});
+
+closeBtn.addEventListener('click', () => banner.classList.remove('visible'));
+
+window.addEventListener('appinstalled', () => banner.classList.remove('visible'));
+
+// ── Service worker (inline via blob) ─────────────
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE = 'fonepay-v1';
+    const ASSETS = ['/'];
+    self.addEventListener('install', e => {
+      e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+      self.skipWaiting();
+    });
+    self.addEventListener('activate', e => {
+      e.waitUntil(caches.keys().then(keys =>
+        Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+      ));
+      self.clients.claim();
+    });
+    self.addEventListener('fetch', e => {
+      e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('/'))) );
+    });
+  `;
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl).catch(() => {});
+}
 </script>
+
+</body>
+</html>
